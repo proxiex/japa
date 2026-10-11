@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Japa</title>
+<meta name="description" content="Can you japa? A Naija survival game: save dollars, pass IELTS, dodge the Visa Plug, and land before time runs out.">
+<meta name="theme-color" content="#07170f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2319b564'/%3E%3Ctext x='32' y='47' font-family='Arial,sans-serif' font-size='42' font-weight='900' text-anchor='middle' fill='%2304170e'%3EJ%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Japa: can you leave Naija?">
+<meta property="og:description" content="Save dollars, pass IELTS, dodge the Visa Plug, and land before three years run out.">
+<meta name="twitter:card" content="summary">
+<style>
+:root {
+  --bg: #07170f; --card: #0f2a1b; --card2: #153a26; --line: #1f4d33;
+  --green: #19b564; --green-d: #0e8a4b; --text: #f2f7f3; --muted: #9fbcab;
+  --gold: #ffcf4a; --red: #ff6b5e; --amber: #ffb347;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding: 0 16px max(24px, env(safe-area-inset-bottom));
+}
+main { max-width: 480px; margin: 0 auto; padding-top: max(16px, env(safe-area-inset-top)); }
+button { font: inherit; color: inherit; cursor: pointer; }
+.btn {
+  display: block; width: 100%; min-height: 48px; padding: 12px 16px; margin: 10px 0 0;
+  background: var(--card2); border: 1px solid var(--line); border-radius: 12px; font-weight: 600;
+}
+.btn.primary { background: var(--green); border-color: var(--green); color: #04170e; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn:focus-visible, .card:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.btn.small { min-height: 44px; padding: 8px 10px; font-size: 14px; margin: 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; margin: 12px 0; }
+.checklist { padding: 10px 14px; margin: 8px 0; }
+.checklist h2 { margin-bottom: 4px; font-size: 12px; }
+h2 { font-size: 15px; margin: 0 0 8px; color: var(--muted); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.fine { color: var(--muted); font-size: 13px; text-align: center; margin-top: 24px; }
+
+/* start */
+.logo { font-size: 84px; font-weight: 900; letter-spacing: .04em; margin-top: 8vh; line-height: 1; color: var(--green); text-shadow: 0 4px 0 #04170e; }
+.tag { font-size: 20px; font-weight: 700; margin: 8px 0 4px; }
+.lede { color: var(--muted); margin: 0 0 20px; }
+
+/* setup */
+.choice { display: flex; gap: 12px; align-items: center; width: 100%; text-align: left; margin: 8px 0 0; }
+.choice.sel { border-color: var(--green); background: var(--card2); box-shadow: inset 0 0 0 1px var(--green); }
+.choice .ico { font-size: 28px; }
+.choice small { display: block; color: var(--muted); font-size: 13px; }
+.chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.chips .choice { margin: 0; }
+.lvl { font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 99px; background: #0b1f14; color: var(--amber); display: inline-block; }
+
+/* play */
+.top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.top b { font-size: 20px; }
+.rate { font-size: 14px; color: var(--muted); }
+.rate .up { color: var(--red); } .rate .down { color: var(--green); }
+.money { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+.money div { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 6px 12px; }
+.money small { display: block; color: var(--muted); font-size: 12px; }
+.money b { font-size: 20px; }
+.row { margin: 6px 0; }
+.rl { display: flex; justify-content: space-between; font-size: 13px; }
+.rr { color: var(--muted); }
+.bar { height: 8px; background: #0a1e13; border-radius: 99px; overflow: hidden; margin-top: 3px; border: 1px solid var(--line); }
+.bar i { display: block; height: 100%; background: var(--amber); border-radius: 99px; transition: width .25s ease; }
+.bar i.ok { background: var(--green); }
+.bar i.hope-low { background: var(--red); }
+.bar i.hope-mid { background: var(--amber); }
+.bar i.hope-hi { background: var(--green); }
+.banner { background: #2a2410; border: 1px solid #5c4d12; color: var(--gold); border-radius: 12px; padding: 10px 12px; margin: 10px 0; font-size: 14px; }
+.latest { background: var(--card2); border-left: 4px solid var(--green); border-radius: 8px; padding: 10px 12px; margin: 12px 0; }
+.latest.bad { border-left-color: var(--red); }
+.event { border-color: var(--gold); }
+.event h3 { margin: 0 0 6px; font-size: 20px; color: var(--gold); }
+.event p { margin: 0 0 6px; }
+.event .btn small { display: block; font-weight: 400; color: var(--amber); font-size: 13px; }
+.ap { display: flex; justify-content: space-between; align-items: center; margin: 14px 0 6px; font-size: 14px; color: var(--muted); }
+.dots { letter-spacing: 4px; color: var(--green); font-size: 18px; }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.actions .btn { margin: 0; text-align: left; display: flex; gap: 8px; align-items: flex-start; }
+.actions .ico { font-size: 22px; line-height: 1.1; }
+.actions small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; line-height: 1.25; }
+.tools { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 8px; }
+.log { color: var(--muted); font-size: 14px; margin: 0; padding-left: 18px; }
+.log li { margin: 3px 0; }
+.sponsor { font-size: 12px; text-align: center; color: var(--muted); margin: 14px 0 0; }
+.sponsor a { color: var(--gold); }
+.link { background: none; border: 0; color: var(--muted); text-decoration: underline; font-size: 13px; min-height: 44px; display: block; margin: 12px auto 0; }
+
+/* end */
+.result h1 { font-size: 30px; line-height: 1.15; margin: 8px 0 4px; }
+.result .sub { color: var(--gold); font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: 14px; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+.stats div { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.stats small { display: block; color: var(--muted); font-size: 12px; }
+.stats b { font-size: 20px; }
+#cardimg { width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); display: block; margin: 12px 0; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.two .btn { margin-top: 8px; }
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+
+<script src="engine.js"></script>
+<script>
+(function () {
+  'use strict';
+  var J = window.Japa;
+  var SAVE_KEY = 'japa.v1';
+  /* Brand slot. Set to e.g. { name: 'Acme Prep', line: 'Free IELTS mock test', url: 'https://example.com' }
+     to show a "Sponsored" line on the play screen. Null hides it. */
+  var SPONSOR = null;
+
+  var app = document.getElementById('app');
+  var ui = { screen: 'start', job: 'dev', route: 'uk', kind: '' };
+  var g = null;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function load() {
+    try {
+      var raw = localStorage.getItem(SAVE_KEY);
+      var s = raw ? JSON.parse(raw) : null;
+      return s && J.JOBS[s.job] && J.ROUTES[s.route] && !s.over ? s : null;
+    } catch (e) { return null; }
+  }
+  function save() {
+    try {
+      if (g && !g.over) localStorage.setItem(SAVE_KEY, JSON.stringify(g));
+      else localStorage.removeItem(SAVE_KEY);
+    } catch (e) { /* storage blocked: game still works */ }
+  }
+
+  /* ---------- views ---------- */
+  function viewStart() {
+    var saved = load();
+    return '<section>' +
+      '<div class="logo">JAPA</div>' +
+      '<p class="tag">Naija no easy. Plan your exit.</p>' +
+      '<p class="lede">Save dollars, pass IELTS, process your papers, dodge the "Visa Plug", and land before three years run out.</p>' +
+      '<button class="btn primary" data-do="new">Start</button>' +
+      (saved ? '<button class="btn" data-do="continue">Continue (month ' + saved.month + ')</button>' : '') +
+      '<p class="fine">A game for fun. Not immigration advice. No real agent can guarantee a visa.</p>' +
+      '</section>';
+  }
+
+  function viewSetup() {
+    var jobs = Object.keys(J.JOBS).map(function (id) {
+      var j = J.JOBS[id];
+      return '<button class="card choice' + (ui.job === id ? ' sel' : '') + '" data-do="job" data-id="' + id + '" aria-pressed="' + (ui.job === id) + '">' +
+        '<span class="ico">' + j.icon + '</span><span><b>' + esc(j.name) + '</b>' +
+        '<small>' + esc(j.blurb) + '</small><small>Pay ' + J.fmtN(j.salary) + '/month</small></span></button>';
+    }).join('');
+    var routes = Object.keys(J.ROUTES).map(function (id) {
+      var r = J.ROUTES[id];
+      return '<button class="card choice' + (ui.route === id ? ' sel' : '') + '" data-do="route" data-id="' + id + '" aria-pressed="' + (ui.route === id) + '">' +
+        '<span class="ico">' + r.flag + '</span><span><b>' + esc(r.name) + '</b><small>' + esc(r.blurb) + '</small>' +
+        '<span class="lvl">' + esc(r.level) + '</span></span></button>';
+    }).join('');
+    return '<section><h2>Who are you?</h2>' + jobs +
+      '<h2 style="margin-top:20px">Where to?</h2><div class="chips">' + routes + '</div>' +
+      '<button class="btn primary" style="margin-top:20px" data-do="begin">Begin the journey</button></section>';
+  }
+
+  function bar(label, pct, right, cls) {
+    return '<div class="row"><div class="rl"><span>' + label + '</span><span class="rr">' + right + '</span></div>' +
+      '<div class="bar"><i class="' + cls + '" style="width:' + Math.round(pct * 100) + '%"></i></div></div>';
+  }
+
+  function needText(c) {
+    var out = [], k, src = [c.need, c.req];
+    src.forEach(function (o) {
+      if (!o) return;
+      for (k in o) {
+        if (k === 'naira') out.push('Need ' + J.fmtN(o[k]));
+        else out.push('Need ' + (k === 'network' ? 'connections' : k) + ' ' + o[k]);
+      }
+    });
+    return out.join(', ');
+  }
+
+  function viewPlay() {
+    var r = J.ROUTES[g.route], req = J.requirements(g);
+    var trend = g.rate > g.lastRate ? '<span class="up">▲</span>' : g.rate < g.lastRate ? '<span class="down">▼</span>' : '';
+    var hopeCls = g.hope < 30 ? 'hope-low' : g.hope < 60 ? 'hope-mid' : 'hope-hi';
+    var checklist = req.map(function (q) { return bar(esc(q.label), q.pct, 'you: ' + esc(q.have) + (q.ok ? ' ✓' : ''), q.ok ? 'ok' : ''); }).join('');
+
+    var eventHtml = '';
+    if (g.event) {
+      var ev = J.eventById(g.event);
+      eventHtml = '<div class="card event" role="group" aria-label="Event"><h3>' + esc(ev.title) + '</h3><p>' + esc(ev.text) + '</p>' +
+        ev.choices.map(function (c, i) {
+          var on = J.choiceEnabled(g, c);
+          return '<button class="btn" data-do="choice" data-id="' + i + '"' + (on ? '' : ' disabled') + '>' + esc(c.label) +
+            (on ? '' : '<small>' + esc(needText(c)) + '</small>') + '</button>';
+        }).join('') + '</div>';
+    }
+
+    var latest = g.log.length ? '<div class="latest ' + ui.kind + '">' + esc(g.log[g.log.length - 1]) + '</div>' : '';
+    var older = g.log.slice(-5, -1).reverse().map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('');
+
+    var blocked = !!g.event || !!g.over;
+    var actions = Object.keys(J.ACTIONS).map(function (id) {
+      var a = J.ACTIONS[id], on = J.canAct(g, id);
+      return '<button class="btn" data-do="act" data-id="' + id + '"' + (on ? '' : ' disabled') + '>' +
+        '<span class="ico">' + a.icon + '</span><span>' + esc(a.label) +
+        '<small>' + esc(a.hint) + (a.cost ? ' · ' + J.fmtN(a.cost) : '') + '</small></span></button>';
+    }).join('');
+
+    var pending = g.pending
+      ? '<div class="banner">Application in review: decision in ' + (g.pending.due - g.month) + ' month(s). Keep your dollars above ' + J.fmtUsd(r.funds) + '.</div>' : '';
+
+    var applyBtn = '<button class="btn primary" data-do="apply"' + (J.canApply(g) ? '' : ' disabled') + '>Apply for ' + esc(r.name) + ' visa (fee ' + J.fmtUsd(J.feeOf(g, r)) + ')</button>' +
+      (J.canApply(g) || g.pending ? '' : '<p class="fine" style="margin:6px 0 0">Meet every requirement above to apply.</p>');
+
+    var sponsor = SPONSOR
+      ? '<p class="sponsor">Sponsored · <a href="' + esc(SPONSOR.url) + '" target="_blank" rel="noopener sponsored">' + esc(SPONSOR.name) + '</a> ' + esc(SPONSOR.line) + '</p>' : '';
+
+    return '<section>' +
+      '<div class="top"><b>Month ' + g.month + '/' + J.MAX_MONTHS + '</b><b>' + r.flag + ' ' + esc(r.name) + '</b>' +
+      '<span class="rate">₦' + g.rate.toLocaleString('en-US') + '/$ ' + trend + '</span></div>' +
+      '<div class="money"><div><small>Naira</small><b>' + J.fmtN(g.naira) + '</b></div><div><small>Dollars</small><b>' + J.fmtUsd(g.usd) + '</b></div></div>' +
+      bar('Hope', g.hope / 100, Math.round(g.hope) + '%', hopeCls) +
+      '<div class="card checklist"><h2>Your japa checklist</h2>' + checklist + '</div>' +
+      pending + latest + eventHtml +
+      '<div class="ap"><span>Actions left this month</span><span class="dots" aria-label="' + g.ap + ' left">' + '●'.repeat(g.ap) + '○'.repeat(2 - g.ap) + '</span></div>' +
+      '<div class="actions">' + actions + '</div>' +
+      '<div class="tools">' +
+        '<button class="btn small" data-do="buy" data-id="100000"' + (blocked ? ' disabled' : '') + '>Buy $ with ₦100k</button>' +
+        '<button class="btn small" data-do="buy" data-id="half"' + (blocked ? ' disabled' : '') + '>Buy $ with half</button>' +
+        '<button class="btn small" data-do="sell"' + (blocked ? ' disabled' : '') + '>Sell $100</button></div>' +
+      applyBtn +
+      '<button class="btn" data-do="end"' + (blocked ? ' disabled' : '') + '>End month ▶</button>' +
+      '<div class="card"><h2>Recent</h2><ul class="log">' + older + '</ul></div>' +
+      sponsor +
+      '<button class="link" data-do="restart">Start over</button>' +
+      '</section>';
+  }
+
+  function resultInfo() {
+    var o = g.over, r = J.ROUTES[g.route];
+    if (o.kind === 'win') return { head: "I japa'd to " + r.name + ' in ' + o.month + ' months', sub: 'Japa don land' };
+    if (o.kind === 'burnout') return { head: 'Japa wore me out at month ' + o.month, sub: 'E don tire me' };
+    return { head: '3 years later, I still dey Naija', sub: 'Japa never land... yet' };
+  }
+
+  function viewEnd() {
+    var info = resultInfo(), s = g.stats;
+    return '<section class="result"><div class="sub">' + esc(info.sub) + '</div><h1>' + esc(info.head) + '</h1>' +
+      '<div><span class="lvl">' + esc(J.title(g)) + '</span></div>' +
+      '<div class="stats">' +
+        '<div><small>Months</small><b>' + g.over.month + '</b></div>' +
+        '<div><small>Dollars saved</small><b>' + J.fmtUsd(g.usd) + '</b></div>' +
+        '<div><small>Scams dodged</small><b>' + s.avoided + '</b></div>' +
+        '<div><small>Scammed</small><b>' + s.scams + '</b></div>' +
+        '<div><small>Applications</small><b>' + s.applications + '</b></div>' +
+        '<div><small>Refusals</small><b>' + s.refused + '</b></div></div>' +
+      '<img id="cardimg" alt="Your Japa result card" width="540" height="675">' +
+      '<div class="two"><button class="btn primary" data-do="share">Share</button>' +
+      '<button class="btn" data-do="wa">WhatsApp</button></div>' +
+      '<button class="btn" data-do="saveimg">Save image</button>' +
+      '<button class="btn" data-do="again">Play again</button></section>';
+  }
+
+  function render() {
+    app.innerHTML = ui.screen === 'start' ? viewStart()
+      : ui.screen === 'setup' ? viewSetup()
+      : ui.screen === 'play' ? viewPlay() : viewEnd();
+    if (ui.screen === 'end') {
+      var img = document.getElementById('cardimg');
+      if (img) img.src = drawCard().toDataURL('image/png');
+    }
+  }
+
+  /* ---------- share card ---------- */
+  function shareUrl() { return location.origin && location.origin !== 'null' ? location.origin + location.pathname : 'Japa'; }
+  function shareText() {
+    var info = resultInfo(), r = J.ROUTES[g.route], s = g.stats;
+    var line = g.over.kind === 'win' ? info.head + ' ' + r.flag + '✈️' : info.head + ' 😅';
+    if (s.scams) line += ' (a "Visa Plug" collected ' + s.scams + 'x)';
+    return line + '. Can you beat me? ' + shareUrl();
+  }
+  function wrap(x, text, maxW) {
+    var words = text.split(' '), lines = [], cur = '';
+    words.forEach(function (w) {
+      var t = cur ? cur + ' ' + w : w;
+      if (x.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t;
+    });
+    if (cur) lines.push(cur);
+    return lines;
+  }
+  function roundRect(x, px, py, w, h, r) {
+    x.beginPath(); x.moveTo(px + r, py); x.arcTo(px + w, py, px + w, py + h, r); x.arcTo(px + w, py + h, px, py + h, r);
+    x.arcTo(px, py + h, px, py, r); x.arcTo(px, py, px + w, py, r); x.closePath();
+  }
+  function drawCard() {
+    var W = 1080, H = 1350, c = document.createElement('canvas'), x = c.getContext('2d');
+    c.width = W; c.height = H;
+    var gr = x.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#0e8a4b'); gr.addColorStop(1, '#04170e');
+    x.fillStyle = gr; x.fillRect(0, 0, W, H);
+    x.fillStyle = 'rgba(255,255,255,0.07)'; x.fillRect(W / 3, 0, W / 3, H);
+    var font = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+    x.textAlign = 'center';
+    x.fillStyle = '#fff'; x.font = '900 150px ' + font; x.fillText('JAPA', W / 2, 190);
+    x.fillStyle = '#d6efe0'; x.font = '600 36px ' + font; x.fillText('The Naija survival game', W / 2, 250);
+
+    var info = resultInfo(), s = g.stats;
+    roundRect(x, 70, 310, W - 140, 810, 36); x.fillStyle = '#ffffff'; x.fill();
+    x.fillStyle = '#0e8a4b'; x.font = '800 34px ' + font; x.fillText(info.sub.toUpperCase(), W / 2, 395);
+    x.fillStyle = '#0b1f14'; x.font = '800 70px ' + font;
+    var lines = wrap(x, info.head, W - 260), y = 490;
+    lines.forEach(function (l) { x.fillText(l, W / 2, y); y += 84; });
+    x.fillStyle = '#b8860b'; x.font = '700 40px ' + font; x.fillText(J.title(g), W / 2, y + 10);
+
+    var rows = [['Months', String(g.over.month)], ['Dollars saved', J.fmtUsd(g.usd)], ['Scams dodged', String(s.avoided)],
+                ['Scammed', String(s.scams)], ['Applications', String(s.applications)], ['Refusals', String(s.refused)]];
+    var top = 790;
+    rows.forEach(function (rw, i) {
+      var cx = i % 2 ? 640 : 270, cy = top + Math.floor(i / 2) * 105;
+      x.fillStyle = '#5b6f63'; x.font = '600 28px ' + font; x.fillText(rw[0], cx, cy);
+      x.fillStyle = '#0b1f14'; x.font = '800 44px ' + font; x.fillText(rw[1], cx, cy + 48);
+    });
+
+    x.fillStyle = '#ffffff'; x.font = '700 44px ' + font; x.fillText('Can you beat me?', W / 2, 1210);
+    x.fillStyle = '#d6efe0'; x.font = '500 30px ' + font; x.fillText(shareUrl().replace(/^https?:\/\//, ''), W / 2, 1265);
+    return c;
+  }
+
+  function doShare() {
+    var text = shareText(), cv = drawCard();
+    cv.toBlob(function (blob) {
+      try {
+        var file = blob && typeof File === 'function' ? new File([blob], 'japa.png', { type: 'image/png' }) : null;
+        if (file && navigator.canShare && navigator.canShare({ files: [file] })) { navigator.share({ files: [file], text: text }).catch(function () {}); return; }
+        if (navigator.share) { navigator.share({ text: text }).catch(function () {}); return; }
+      } catch (e) { /* fall through to WhatsApp */ }
+      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
+    }, 'image/png');
+  }
+  function doSaveImg() {
+    var a = document.createElement('a');
+    a.href = drawCard().toDataURL('image/png'); a.download = 'japa-result.png';
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  /* ---------- controller ---------- */
+  function after(kind) {
+    ui.kind = kind || '';
+    if (g && g.over) ui.screen = 'end';
+    save(); render();
+  }
+
+  app.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-do]');
+    if (!t || t.disabled) return;
+    var d = t.getAttribute('data-do'), id = t.getAttribute('data-id');
+    switch (d) {
+      case 'new': ui.screen = 'setup'; window.scrollTo(0, 0); render(); break;
+      case 'continue': g = load(); if (g) { ui.screen = 'play'; ui.kind = ''; } render(); break;
+      case 'job': ui.job = id; render(); break;
+      case 'route': ui.route = id; render(); break;
+      case 'begin': g = J.newGame(ui.job, ui.route); ui.screen = 'play'; window.scrollTo(0, 0); after(); break;
+      case 'act': J.act(g, id); after(); break;
+      case 'buy': J.buyUsd(g, id === 'half' ? Math.floor(g.naira / 2) : Number(id)); after(); break;
+      case 'sell': J.sellUsd(g, 100); after(); break;
+      case 'apply': J.apply(g); after(); break;
+      case 'end': J.endMonth(g); after(); break;
+      case 'choice': var res = J.choose(g, Number(id)); after(res && res.kind === 'bad' ? 'bad' : ''); break;
+      case 'restart': if (window.confirm('Start over? Your current run will be lost.')) { g = null; save(); ui.screen = 'setup'; window.scrollTo(0, 0); render(); } break;
+      case 'again': g = null; ui.screen = 'setup'; window.scrollTo(0, 0); render(); break;
+      case 'share': doShare(); break;
+      case 'wa': window.open('https://wa.me/?text=' + encodeURIComponent(shareText()), '_blank', 'noopener'); break;
+      case 'saveimg': doSaveImg(); break;
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
